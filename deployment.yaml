@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parenting-assistant
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: parenting-assistant
+  template:
+    metadata:
+      labels:
+        app: parenting-assistant
+    spec:
+      containers:
+      - name: parenting-assistant
+        image: <your-dockerhub-username>/parenting-assistant:latest
+        ports:
+        - containerPort: 80
