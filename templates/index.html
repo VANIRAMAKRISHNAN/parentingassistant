@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parenting Assistant - powered by GPT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f06292;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        #container {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0,0,0,0.7);
+            border-radius: 10px;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        #chatbox {
+            height: 300px;
+            width: 100%;
+            overflow-y: scroll;
+            margin-bottom: 20px;
+            border: 1px solid white;
+            padding: 10px;
+            background: white;
+            color: black;
+        }
+        input, button, select {
+            padding: 10px;
+            font-size: 18px;
+        }
+        input {
+            width: 60%;
+        }
+        select {
+            width: 20%;
+        }
+        button {
+            width: 18%;
+            margin-left: 2%;
+            background: #ff4081;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Parenting Assistant - know about your child</h1>
+        <p>अपने बच्चे के बेहतर भविष्य के लिए समर्पित</p>
+        <div id="chatbox">
+        </div>
+        <form id="chat-form">
+            <select id="language" required>
+                <option value="" disabled selected>Select your language</option>
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="ta">Tamil</option>
+                <option value="ml">Malayalam</option>
+                <option value="te">Telugu</option>
+                <option value="kn">Kannada</option>
+            </select>
+            <input type="text" id="question" placeholder="Type your question here..." required>
+            <button type="submit">Ask</button>
+        </form>
+    </div>
+    <script>
+         $(document).ready(function() {
+        $('#chat-form').on('submit', function(e) {
+            e.preventDefault();  // Prevent the form from being submitted normally
+            let question = $('#question').val();  // Get the value of the question input
+
+            // Send a POST request to the server
+            $.ajax({
+                url: '/ask',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    question: question,
+                    language: $('#language').val() // Include the selected language
+                }),
+                dataType: 'json',
+                success: function(data) {
+                    let answer = data.answer;  // Get the answer from the response
+
+                    // Add the question and answer to the chatbox
+                    $('#chatbox').append('<p>You: ' + question + '</p>');
+                    $('#chatbox').append('<p>AI: ' + answer + '</p>');
+
+                    // Clear the question input
+                    $('#question').val('');
+                },
+                error: function() {
+                    // This function will be called if the request fails
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
+    });
+    </script>
+</body>
+</html>
