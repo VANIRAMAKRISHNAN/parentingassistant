@@ -22,9 +22,10 @@ Generate API keys, note down region and endpoint for Translator API in Azure
 2. Clone the code
       git clone https://github.com/yourusername/parenting-assistant.git
       cd parenting-assistant
-4. Install the below packakges/dependencies using: pip install -r requirements.txt command
-5. Install Docker
-6. Build Docker image and run as container using below 2 commands:
+4. Update the app.py program with OpenAPI api key and Translator API key and region
+5. Install the below packakges/dependencies using: pip install -r requirements.txt command
+6. Install Docker
+7. Build Docker image and run as container using below 2 commands:
       docker build -t parenting-assistant .
       docker run -p 80:80 parenting-assistant
       
