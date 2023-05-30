@@ -16,4 +16,4 @@ spec:
       - name: parenting-assistant
         image: <your-dockerhub-username>/parenting-assistant:latest
         ports:
-        - containerPort: 80
+        - containerPort: 5000
